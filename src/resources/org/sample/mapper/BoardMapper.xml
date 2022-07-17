@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sample.mapper.BoardMapper">
+
+    <select id="getList" resultType="org.sample.domain.BoardVO">
+        <![CDATA[ select * from  bootex.tbl_board where bno > 0 ]]>
+    </select>
+
+<!--https://yun5o.tistory.com/entry/MySQL-AUTOINCREMENT-%EC%9E%90%EB%8F%99%EC%A6%9D%EA%B0%80-%EA%B0%92-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="bno">
+        insert into bootex.tbl_board(title,content,writer)
+        values (#{title}, #{content}, #{writer})
+    </insert>
+
+    <select id="read" resultType="org.sample.domain.BoardVO">
+        select * from bootex.tbl_board where bno = #{bno}
+    </select>
+
+    <delete id="delete" parameterType="long" >
+        delete from bootex.tbl_board where bno = #{bno}
+    </delete>
+
+    <update id="update">
+        <![CDATA[
+        update bootex.tbl_board
+        set title=#{title}, content=#{content},
+        writer=#{writer}, updateDate = sysdate()
+        where bno = #{bno}
+         ]]>
+    </update>
+</mapper>
